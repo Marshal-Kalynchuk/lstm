@@ -1,0 +1,2 @@
+MODEL_NAME = "LSMT"
+TRAIN_DATA = "SOL-USD.csv"
