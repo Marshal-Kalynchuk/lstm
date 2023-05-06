@@ -22,8 +22,6 @@ from sklearn.model_selection import train_test_split
 import mdn
 
 from keras.callbacks import ReduceLROnPlateau
-from tensorflow.keras.preprocessing.sequence import TimeseriesGenerator
-
 
 from tensorflow.python.client import device_lib
 print(device_lib.list_local_devices())
@@ -190,6 +188,11 @@ del train_variables
 # scale traininng data
 scaled_train_variables_df = pd.DataFrame(scaled_train_variables, index=train_data.index, columns=INPUT_COLUMNS)
 scaled_train_targets_df = pd.DataFrame(scaled_train_targets, index=train_data.index, columns=[TARGET_COLUMN])
+
+
+train_dataset = tf.data.Dataset.from_tensor_slices(scaled_train_targets)
+train_dataset.batch()
+
 scaled_train_data_df = pd.concat([scaled_train_targets_df, scaled_train_variables_df], axis=1).fillna(value=0)
 
 del scaled_train_variables_df
